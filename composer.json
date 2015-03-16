@@ -1,0 +1,18 @@
+{
+    "name": "martinlindhe/php-debughelper",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Martin Lindhe",
+            "email": "martin@ubique.se"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "DebugHelper\\": "src"
+        }
+    }
+}
