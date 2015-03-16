@@ -1,40 +1,39 @@
 <?php namespace DebugHelper;
 
-class HexPrinter
+class BinaryPrinter
 {
     /**
-     * Prints hex dump of a binary string, similar to xxd
+     * Prints base-2 (binary) representation of input string
      * @param string $m
      * @param int $rowLength
      * @param string $fillChar
-     * @return string of hex + ascii values
+     * @return string
      */
-    public static function render($m, $rowLength = 16, $fillChar = ' ')
+    public static function render($m, $rowLength = 8, $fillChar = ' ')
     {
         $j = 0;
         $bytes = '';
-        $hex = '';
+        $row = '';
         $res = '';
         $rowOffset = 0;
 
         for ($i = 0; $i < strlen($m); $i++) {
             $x = substr($m, $i, 1);
 
-            if (ord($x) > 30 && ord($x) < 0x80) {
+            if (ord($x) > 0x1F && ord($x) < 0x80)
                 $bytes .= $x;
-            } else {
+            else
                 $bytes .= '.';
-            }
 
-            $hex .= bin2hex($x).$fillChar;
+            $bin = sprintf("%08d", decbin(ord($x)));
+            $row .= $bin.$fillChar;
 
             if (++$j == $rowLength) {
-                $res .=
-                    sprintf("%06x", $rowOffset).": "
-                    .$hex.' '.$bytes.PHP_EOL;
+                $res .= sprintf("%06x", $rowOffset).": "
+                    .$row.' '.$bytes.PHP_EOL;
                 $rowOffset += $rowLength;
                 $bytes = '';
-                $hex = '';
+                $row = '';
                 $j = 0;
             }
         }
@@ -42,7 +41,7 @@ class HexPrinter
         if ($j) {
             $res .=
                 sprintf("%06x", $rowOffset).": "
-                .$hex.' '
+                .$row.' '
                 .str_repeat(' ', ($rowLength - strlen($bytes)) * 3)
                 .$bytes.PHP_EOL;
         }
