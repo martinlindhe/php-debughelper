@@ -1,9 +1,15 @@
 <?php
 
+use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Symfony\Component\VarDumper\Dumper\CliDumper;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 
 if (!function_exists('d')) {
+    /**
+     * Dumps variable
+     * @param $s
+     * @throws Exception
+     */
     function d($s)
     {
         $dumper = 'cli' === PHP_SAPI ? new CliDumper : new HtmlDumper;
@@ -13,6 +19,10 @@ if (!function_exists('d')) {
 }
 
 if (!function_exists('dd')) {
+    /**
+     * Dumps variable and die
+     * @param $s
+     */
     function dd($s)
     {
         d($s);
@@ -21,6 +31,11 @@ if (!function_exists('dd')) {
 }
 
 if (!function_exists('dh')) {
+    /**
+     * Returns hex dump
+     * @param string $s
+     * @return string
+     */
     function dh($s)
     {
         return \DebugHelper\HexPrinter::render($s);
@@ -28,6 +43,11 @@ if (!function_exists('dh')) {
 }
 
 if (!function_exists('dbits')) {
+    /**
+     * Returns binary dump
+     * @param string $s
+     * @return string
+     */
     function dbits($s)
     {
         return \DebugHelper\BinaryPrinter::render($s);
@@ -72,5 +92,60 @@ if (!function_exists('bt')) {
             }
             echo PHP_EOL;
         }
+    }
+}
+
+if (!function_exists('dm')) {
+    /**
+     * Prints current memory usage
+     */
+    function dm()
+    {
+        $used_mem = memory_get_peak_usage(false);
+        echo 'Memory: using ' . round(($used_mem / 1024 / 1024), 1) . 'M';
+        $memory_limit = ini_get('memory_limit');
+        if ($memory_limit == '-1') {
+            echo ' (no limit)' . PHP_EOL;
+        } else {
+            $limit = datasize_to_bytes($memory_limit);
+            $pct = round($used_mem / $limit * 100, 1);
+            $limit_s = round(($limit / 1024 / 1024), 1);
+            echo ' (' . $pct . '% of ' . $limit_s . 'M)' . PHP_EOL;
+        }
+        if (extension_loaded('apc')) {
+            $info = apc_cache_info('', true);
+            echo 'APC: using ' . round($info['mem_size'] / 1024 / 1024, 2) . 'M, '
+                . $info['num_hits'] . ' hits, ' . $info['num_misses'] . ' misses, '
+                . $info['num_entries'] . ' entries (max ' . $info['num_slots'] . ')' . PHP_EOL;
+        }
+    }
+}
+
+if (!function_exists('datasize_to_bytes')) {
+    /**
+     * Converts strings like "128M" to bytes
+     * @param string $str
+     * @return int
+     */
+    function datasize_to_bytes($str)
+    {
+        $multiplier = 'B';
+        $value = (int)$str;
+
+        for ($i = 0; $i < strlen($str); $i++) {
+            if (!is_numeric($str{$i})) {
+                $value = (int)substr($str, 0, $i);
+                $multiplier = strtoupper(substr($str, $i));
+                break;
+            }
+        }
+
+        $index = array_search($multiplier, ['B', 'K', 'M', 'G', 'T']);
+
+        if ($index > 0) {
+            return $value * pow(1024, $index);
+        }
+
+        return $value;
     }
 }

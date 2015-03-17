@@ -23,12 +23,20 @@ class helpersTest extends \PHPUnit_Framework_TestCase
         d(['hej' => 11]);
     }
 
-
     function test_bt()
     {
-        bt();
-
-        /// XXXX on dd() show line ending the script!
+     //   bt();
     }
 
+    function test_dm()
+    {
+        dm();
+    }
+
+    function test_datasize_to_bytes()
+    {
+        $this->assertEquals(1024, datasize_to_bytes('1k'));
+        $this->assertEquals(1024*1024, datasize_to_bytes('1M'));
+        $this->assertEquals(128*1024*1024, datasize_to_bytes('128M'));
+    }
 }
