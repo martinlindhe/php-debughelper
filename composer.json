@@ -9,7 +9,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "symfony/var-dumper": "2.7.*@dev"
+        "symfony/var-dumper": "~2.6"
     },
     "autoload": {
         "psr-4": {
