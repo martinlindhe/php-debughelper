@@ -23,4 +23,12 @@ class helpersTest extends \PHPUnit_Framework_TestCase
         d(['hej' => 11]);
     }
 
+
+    function test_bt()
+    {
+        bt();
+
+        /// XXXX on dd() show line ending the script!
+    }
+
 }
