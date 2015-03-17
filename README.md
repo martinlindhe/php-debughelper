@@ -67,4 +67,5 @@ bt()      prints a backtrace
 dh()      shorthand for DebugHelper\HexPrinter::render()
 dbits()   shorthand for DebugHelper\BinaryPrinter::render()
 dm()      prints current memory usage
+apcm()    prints memory usage by the apc extension
 ```

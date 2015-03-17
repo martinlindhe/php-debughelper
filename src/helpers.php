@@ -112,12 +112,23 @@ if (!function_exists('dm')) {
             $limit_s = round(($limit / 1024 / 1024), 1);
             echo ' (' . $pct . '% of ' . $limit_s . 'M)' . PHP_EOL;
         }
-        if (extension_loaded('apc')) {
-            $info = apc_cache_info('', true);
-            echo 'APC: using ' . round($info['mem_size'] / 1024 / 1024, 2) . 'M, '
-                . $info['num_hits'] . ' hits, ' . $info['num_misses'] . ' misses, '
-                . $info['num_entries'] . ' entries (max ' . $info['num_slots'] . ')' . PHP_EOL;
+    }
+}
+
+if (!function_exists('apcm')) {
+    /**
+     * Prints memory usage by the apc extension
+     * @throws Exception
+     */
+    function apcm()
+    {
+        if (!extension_loaded('apc')) {
+            throw new \Exception('apc extension not loaded');
         }
+        $info = apc_cache_info('', true);
+        echo 'APC: using ' . round($info['mem_size'] / 1024 / 1024, 2) . 'M, '
+            . $info['num_hits'] . ' hits, ' . $info['num_misses'] . ' misses, '
+            . $info['num_entries'] . ' entries (max ' . $info['num_slots'] . ')' . PHP_EOL;
     }
 }
 
