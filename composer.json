@@ -18,6 +18,8 @@
         "psr-4": {
             "DebugHelper\\": "src"
         },
-        "files": ["src/helpers.php"]
+        "files": [
+            "src/helpers.php"
+        ]
     }
 }
