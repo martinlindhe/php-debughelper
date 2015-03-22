@@ -63,7 +63,7 @@ echo $watch->getElapsedTime()." seconds elapsed\n";
 ```
 d()       dumps variable, using symfony/var-dumper
 dd()      dump and die
-bt()      prints a backtrace
+bt($ex = null)  prints a backtrace (optionally from exception)
 dh()      shorthand for DebugHelper\HexPrinter::render()
 dbits()   shorthand for DebugHelper\BinaryPrinter::render()
 dm()      prints current memory usage

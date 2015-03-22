@@ -58,10 +58,15 @@ if (!function_exists('dbits')) {
 if (!function_exists('bt')) {
     /**
      * Prints backtrace
+     * @param Exception|null $ex
      */
-    function bt()
+    function bt(\Exception $ex = null)
     {
-        $bt = debug_backtrace();
+        if ($ex === null) {
+            $bt = debug_backtrace();
+        } else {
+            $bt = $ex->getTrace();
+        }
 
         foreach ($bt as $idx => $l) {
             if (!empty($l['class'])) {
