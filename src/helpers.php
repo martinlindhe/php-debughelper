@@ -54,7 +54,6 @@ if (!function_exists('dbits')) {
     }
 }
 
-
 if (!function_exists('bt')) {
     /**
      * Prints backtrace
