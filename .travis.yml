@@ -11,5 +11,8 @@ php:
 script:
   - phpunit
 
+before_install:
+  - composer self-update
+
 install:
   - composer install
