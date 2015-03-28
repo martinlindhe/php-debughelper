@@ -2,22 +2,37 @@
 
 class Stopwatch
 {
-    private $timeStart;
-    private $timeStop;
+    /** @var Measure */
+    protected $measure = null;
+
+    protected $name;
+
+    public function __construct($name = 'default')
+    {
+        $this->name = $name;
+    }
 
     public function start()
     {
-        $this->timeStart = microtime(true);
+        $this->measure  = new Measure();
+        return $this;
     }
 
     public function stop()
     {
-        $this->timeStop = microtime(true);
-        return $this->getElapsedTime();
+        $this->measure->stop();
+        return $this->measure->getElapsedTime();
+    }
+
+    public function stopAndPrintResult()
+    {
+        $this->stop();
+
+        echo '['.$this->name.'] '.number_format($this->measure->getElapsedTime(), 4)." seconds elapsed\n";
     }
 
     function getElapsedTime()
     {
-        return $this->timeStop - $this->timeStart;
+        return $this->measure->getElapsedTime();
     }
 }
