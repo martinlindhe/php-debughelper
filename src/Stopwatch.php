@@ -28,7 +28,7 @@ class Stopwatch
     {
         $this->stop();
 
-        echo '['.$this->name.'] '.number_format($this->measure->getElapsedTime(), 4)." seconds elapsed\n";
+        echo '['.$this->name.'] '.number_format($this->measure->getElapsedTime(), 4).' seconds elapsed'.PHP_EOL;
     }
 
     function getElapsedTime()
