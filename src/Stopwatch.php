@@ -24,11 +24,15 @@ class Stopwatch
         return $this->measure->getElapsedTime();
     }
 
-    public function stopAndPrintResult()
+    public function stopAndPrintResult($comment = '')
     {
         $this->stop();
 
-        echo '['.$this->name.'] '.number_format($this->measure->getElapsedTime(), 3).' seconds elapsed'.PHP_EOL;
+        echo '['.$this->name.'] '
+            .($comment ? $comment.' ' : '')
+            .number_format($this->measure->getElapsedTime(), 3)
+            .' seconds elapsed'
+            .PHP_EOL;
     }
 
     function getElapsedTime()
