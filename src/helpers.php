@@ -1,5 +1,6 @@
 <?php
 
+use DebugHelper\Logger;
 use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Symfony\Component\VarDumper\Dumper\CliDumper;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
@@ -12,7 +13,7 @@ if (!function_exists('d')) {
      */
     function d($s)
     {
-        $dumper = 'cli' === PHP_SAPI ? new CliDumper : new HtmlDumper;
+        $dumper = PHP_SAPI === 'cli' ? new CliDumper : new HtmlDumper;
 
         $dumper->dump((new VarCloner)->cloneVar($s));
     }
@@ -162,5 +163,39 @@ if (!function_exists('datasize_to_bytes')) {
         }
 
         return $value;
+    }
+}
+
+
+if (!function_exists('dbg')) {
+    /**
+     * Prints debug message to console or error_log (from web)
+     * @param string $s
+     */
+    function dbg($s)
+    {
+        Logger::dbg($s);
+    }
+}
+
+if (!function_exists('nfo')) {
+    /**
+     * Prints info message to console or error_log (from web)
+     * @param string $s
+     */
+    function nfo($s)
+    {
+        Logger::nfo($s);
+    }
+}
+
+if (!function_exists('err')) {
+    /**
+     * Prints error message to console or error_log (from web)
+     * @param string $s
+     */
+    function err($s)
+    {
+        Logger::err($s);
     }
 }
