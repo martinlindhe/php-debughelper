@@ -7,30 +7,28 @@ class HexPrinter
      * @param string $m
      * @param int $rowLength
      * @param string $fillChar
+     * @param bool $showOffset
      * @return string of hex + ascii values
      */
-    public static function render($m, $rowLength = 16, $fillChar = ' ')
+    public static function render($m, $rowLength = 16, $fillChar = ' ', $showOffset = true)
     {
-        $j = 0;
-        $bytes = '';
-        $hex = '';
         $res = '';
         $rowOffset = 0;
+
+        $bytes = '';
+        $hex = '';
+        $j = 0;
 
         for ($i = 0; $i < strlen($m); $i++) {
             $x = substr($m, $i, 1);
 
-            if (ord($x) > 30 && ord($x) < 0x80) {
-                $bytes .= $x;
-            } else {
-                $bytes .= '.';
-            }
+            $bytes .= self::decodeReadable($x);
 
             $hex .= bin2hex($x).$fillChar;
 
             if (++$j == $rowLength) {
                 $res .=
-                    sprintf("%06x", $rowOffset).": "
+                    ($showOffset ? sprintf("%06x", $rowOffset).": " : '')
                     .$hex.' '.$bytes.PHP_EOL;
                 $rowOffset += $rowLength;
                 $bytes = '';
@@ -41,12 +39,24 @@ class HexPrinter
 
         if ($j) {
             $res .=
-                sprintf("%06x", $rowOffset).": "
+                ($showOffset ? sprintf("%06x", $rowOffset).": " : '')
                 .$hex.' '
                 .str_repeat(' ', ($rowLength - strlen($bytes)) * 3)
                 .$bytes.PHP_EOL;
         }
 
         return $res;
+    }
+
+    /**
+     * @param string $c one byte
+     * @return string
+     */
+    private static function decodeReadable($c)
+    {
+        if (ord($c) > 30 && ord($c) < 0x80) {
+            return $c;
+        }
+        return '.';
     }
 }
