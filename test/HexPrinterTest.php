@@ -17,6 +17,4 @@ class HexPrinterTest extends \PHPUnit_Framework_TestCase
             \DebugHelper\HexPrinter::render("\xF0\xFF\x00")
         );
     }
-
-
 }

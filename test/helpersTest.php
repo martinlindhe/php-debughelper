@@ -33,6 +33,11 @@ class helpersTest extends \PHPUnit_Framework_TestCase
         dm();
     }
 
+    function test_err()
+    {
+        err('show line number');
+    }
+
     function test_datasize_to_bytes()
     {
         $this->assertEquals(1024, datasize_to_bytes('1k'));

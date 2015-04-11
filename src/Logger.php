@@ -33,7 +33,18 @@ class Logger
      */
     public static function err($s)
     {
-        // TODO print caller file & line
+        $bt = debug_backtrace();
+        $caller = array_shift($bt);
+        if (basename($caller['function']) == 'err') {
+            $caller = array_shift($bt);
+        }
+
+        // try to strip useless part of path
+        $pwd = getenv('PWD').'/';
+        $file = str_replace($pwd, '', $caller['file']);
+
+        $s = '['.$file.':'.$caller['line'].'] '.$s;
+
         self::printMessage($s, 'error');
     }
 
