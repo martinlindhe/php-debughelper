@@ -35,7 +35,17 @@ class helpersTest extends \PHPUnit_Framework_TestCase
 
     function test_err()
     {
-        err('show line number');
+        err('error text');
+    }
+
+    function test_nfo()
+    {
+        nfo('info text');
+    }
+
+    function test_dbg()
+    {
+        dbg('debug text');
     }
 
     function test_datasize_to_bytes()

@@ -15,7 +15,7 @@ class Logger
      */
     public static function dbg($s)
     {
-        self::printMessage($s, 'comment');
+        self::printMessage(self::withBacktrace($s), 'comment');
     }
 
     /**
@@ -24,7 +24,7 @@ class Logger
      */
     public static function nfo($s)
     {
-        self::printMessage($s, 'info');
+        self::printMessage(self::withBacktrace($s), 'info');
     }
 
     /**
@@ -33,19 +33,23 @@ class Logger
      */
     public static function err($s)
     {
+        self::printMessage(self::withBacktrace($s), 'error');
+    }
+
+    private static function withBacktrace($s)
+    {
         $bt = debug_backtrace();
-        $caller = array_shift($bt);
-        if (basename($caller['function']) == 'err') {
+
+        $caller = null;
+        do {
             $caller = array_shift($bt);
-        }
 
-        // try to strip useless part of path
-        $pwd = getenv('PWD').'/';
-        $file = str_replace($pwd, '', $caller['file']);
+        } while ($caller && in_array(basename($caller['file']), ['withBacktrace', 'err', 'nfo', 'dbg']));
 
-        $s = '['.$file.':'.$caller['line'].'] '.$s;
+        $file = isset($caller['file']) ? basename($caller['file']) : 'null';
+        $line = isset($caller['line']) ? $caller['line'] : 'null';
 
-        self::printMessage($s, 'error');
+        return '['.$file.':'.$line.'] '.$s;
     }
 
     private static function printMessage($s, $tag)
