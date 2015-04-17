@@ -44,7 +44,7 @@ class Logger
         do {
             $caller = array_shift($bt);
 
-        } while ($caller && in_array(basename($caller['file']), ['withBacktrace', 'err', 'nfo', 'dbg']));
+        } while ($caller && !empty($caller['class']) && $caller['class'] == 'DebugHelper\Logger');
 
         $file = isset($caller['file']) ? basename($caller['file']) : 'null';
         $line = isset($caller['line']) ? $caller['line'] : 'null';
