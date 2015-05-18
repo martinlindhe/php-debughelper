@@ -5,6 +5,7 @@ class Stopwatch
     /** @var Measure */
     protected $measure = null;
 
+    /** @var string */
     protected $name;
 
     public function __construct($name = 'default')
@@ -14,13 +15,21 @@ class Stopwatch
 
     public function start()
     {
-        $this->measure  = new Measure();
+        $this->measure = new Measure;
         return $this;
+    }
+
+    public function startWithMessage($msg)
+    {
+        $this->printMessage($msg);
+
+        $this->start();
     }
 
     public function stop()
     {
         $this->measure->stop();
+
         return $this->measure->getElapsedTime();
     }
 
@@ -28,11 +37,16 @@ class Stopwatch
     {
         $this->stop();
 
-        echo '['.$this->name.'] '
-            .($comment ? $comment.' ' : '')
-            .number_format($this->measure->getElapsedTime(), 3)
-            .' seconds elapsed'
-            .PHP_EOL;
+        $this->printMessage(
+            ($comment ? $comment.' ' : '')
+            . number_format($this->measure->getElapsedTime(), 3)
+            . ' seconds elapsed'
+        );
+    }
+
+    public function printMessage($msg)
+    {
+        echo '[' . $this->name . '] ' . $msg . PHP_EOL;
     }
 
     function getElapsedTime()

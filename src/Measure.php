@@ -2,7 +2,10 @@
 
 class Measure
 {
+    /** @var float */
     var $timeStart;
+
+    /** @var float */
     var $timeStop;
 
     public function __construct()
