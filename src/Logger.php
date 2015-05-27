@@ -36,7 +36,7 @@ class Logger
         self::printMessage(self::withBacktrace($s), 'error');
     }
 
-    private static function withBacktrace($s)
+    public static function withBacktrace($s)
     {
         $bt = debug_backtrace();
 

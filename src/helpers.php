@@ -15,6 +15,8 @@ if (!function_exists('d')) {
     {
         $dumper = PHP_SAPI === 'cli' ? new CliDumper : new HtmlDumper;
 
+        echo Logger::withBacktrace('');
+
         $dumper->dump((new VarCloner)->cloneVar($s));
     }
 }
