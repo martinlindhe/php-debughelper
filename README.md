@@ -1,6 +1,7 @@
 ## About
 
 [![Build Status](https://travis-ci.org/martinlindhe/php-debughelper.png?branch=master)](https://travis-ci.org/martinlindhe/php-debughelper)
+https://packagist.org/packages/martinlindhe/php-debughelper
 
 
 ## Installation
