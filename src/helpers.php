@@ -15,7 +15,8 @@ if (!function_exists('d')) {
     {
         $dumper = PHP_SAPI === 'cli' ? new CliDumper : new HtmlDumper;
 
-        echo Logger::withBacktrace('');
+        echo Logger::withCallsite('');
+        flush();
 
         $dumper->dump((new VarCloner)->cloneVar($s));
     }
@@ -199,5 +200,41 @@ if (!function_exists('err')) {
     function err($s)
     {
         Logger::err($s);
+    }
+}
+
+
+if (!function_exists('dbgTime')) {
+    /**
+     * Prints debug message with current time to console or error_log (from web)
+     * @param string $s
+     */
+    function dbgTime($s)
+    {
+        Logger::dbgTime($s);
+    }
+}
+
+
+if (!function_exists('nfoTime')) {
+    /**
+     * Prints info message with current time to console or error_log (from web)
+     * @param string $s
+     */
+    function nfoTime($s)
+    {
+        Logger::nfoTime($s);
+    }
+}
+
+
+if (!function_exists('errTime')) {
+    /**
+     * Prints error message with current time to console or error_log (from web)
+     * @param string $s
+     */
+    function errTime($s)
+    {
+        Logger::errTime($s);
     }
 }

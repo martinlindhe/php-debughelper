@@ -1,5 +1,6 @@
 <?php namespace DebugHelper;
 
+use Carbon\Carbon;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
 /**
@@ -15,7 +16,7 @@ class Logger
      */
     public static function dbg($s)
     {
-        self::printMessage(self::withBacktrace($s), 'comment');
+        self::printMessage(self::withCallsite($s), 'comment');
     }
 
     /**
@@ -24,7 +25,7 @@ class Logger
      */
     public static function nfo($s)
     {
-        self::printMessage(self::withBacktrace($s), 'info');
+        self::printMessage(self::withCallsite($s), 'info');
     }
 
     /**
@@ -33,10 +34,42 @@ class Logger
      */
     public static function err($s)
     {
-        self::printMessage(self::withBacktrace($s), 'error');
+        self::printMessage(self::withCallsite($s), 'error');
     }
 
-    public static function withBacktrace($s)
+    /**
+     * Yellow text with current time
+     * @param string $s
+     */
+    public static function dbgTime($s)
+    {
+        self::printMessage('<' . Carbon::now()->toTimeString() . '> ' . self::withCallsite($s), 'comment');
+    }
+
+    /**
+     * Green text with current time
+     * @param string $s
+     */
+    public static function nfoTime($s)
+    {
+        self::printMessage('<' . Carbon::now()->toTimeString() . '> ' . self::withCallsite($s), 'info');
+    }
+
+    /**
+     * White text on red background with current time
+     * @param string $s
+     */
+    public static function errTime($s)
+    {
+        self::printMessage('<' . Carbon::now()->toTimeString() . '> ' . self::withCallsite($s), 'error');
+    }
+
+    /**
+     * Also used by d()
+     * @param string $s
+     * @return string
+     */
+    public static function withCallsite($s)
     {
         $bt = debug_backtrace();
 
