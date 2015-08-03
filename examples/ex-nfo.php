@@ -2,7 +2,7 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-putenv('DEBUG=1');
+putenv('DEBUG=0');
 
 dbgTime('hej');
 nfoTime('hej');

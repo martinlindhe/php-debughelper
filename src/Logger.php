@@ -16,7 +16,9 @@ class Logger
      */
     public static function dbg($s)
     {
-        self::printMessage(self::withCallsite($s), 'comment');
+        if (getenv('DEBUG') == '1') {
+            self::printMessage(self::withCallsite($s), 'comment');
+        }
     }
 
     /**
@@ -43,7 +45,9 @@ class Logger
      */
     public static function dbgTime($s)
     {
-        self::printMessage('<' . Carbon::now()->toTimeString() . '> ' . self::withCallsite($s), 'comment');
+        if (getenv('DEBUG') == '1') {
+            self::printMessage('<' . Carbon::now()->toTimeString() . '> ' . self::withCallsite($s), 'comment');
+        }
     }
 
     /**
@@ -87,7 +91,6 @@ class Logger
 
     private static function printMessage($s, $tag)
     {
-        // TODO show if debug message toggle is on, configure per project using dotenv?
         if (PHP_SAPI === 'cli') {
             $output = new ConsoleOutput;
             $output->writeln('<'.$tag.'>' . $s . '</'.$tag.'>');
