@@ -60,6 +60,18 @@ $watch->stop();
 echo $watch->getElapsedTime()." seconds elapsed\n";
 ```
 
+## Logging
+
+dbg($msg); // write to stdout if DEBUG=1
+nfo($msg);
+err($msg);
+
+dbgTime($msg);
+nfoTime($msg);
+errTime($msg);
+
+
+
 ## Helpers
 
 ```

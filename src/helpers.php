@@ -177,7 +177,9 @@ if (!function_exists('dbg')) {
      */
     function dbg($s)
     {
-        Logger::dbg($s);
+        if (getenv('DEBUG') == '1') {
+            Logger::dbg($s);
+        }
     }
 }
 
@@ -211,7 +213,9 @@ if (!function_exists('dbgTime')) {
      */
     function dbgTime($s)
     {
-        Logger::dbgTime($s);
+        if (getenv('DEBUG') == '1') {
+            Logger::dbgTime($s);
+        }
     }
 }
 
